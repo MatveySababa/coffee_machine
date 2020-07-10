@@ -73,12 +73,82 @@ function changeDisplayText(text) {
   displayText.innerHTML = text;
 }
  
+// Drag-n-Drop
 
+let money = document.querySelectorAll(".money img");
 
+/*
+for (let i = 0; i < money.length; i++) { // первый вариант функции
+  money[i].onmousedown = takemoney;
+}       */
 
+for (let bill of money) {        // второй вариант функции
+  bill.onmousedown = takemoney;
+}
 
+// в функцию, которая присвоена соботию, первым параметром передаётся объект события (event)
 
+function takemoney() {
+  event.preventDefault(); // прерывает объект события (event)
+  let bill = this;
+  let billCoords = bill.getBoundingClientRect(); // получение объекта, который описывает положение элемента на стр.
+  let billHeight = billCoords.height;
+  let billWidth = billCoords.width;
+  bill.style.position = "absolute";
+  if (!bill.style.transform) {
+    bill.style.top = (event.clientY - billHeight/2) + "px";
+    bill.style.left = (event.clientX - billWidth/2) + "px";
+    bill.style.transform = "rotate(90deg)";
+  } else {
+    bill.style.top = (event.clientY - billWidth/2) + "px";
+    bill.style.left = (event.clientX - billHeight/2) + "px";
+  }
+  bill.style.transition = "transform .3s";
+  
+  window.onmousemove = function(event) {
+    let billCoords = bill.getBoundingClientRect();
+    let billHeight = billCoords.height;
+    let billWidth = billCoords.width;
+    bill.style.top = (event.clientY - billWidth/2) + "px";
+    bill.style.left = (event.clientX - billHeight/2) + "px";
+  }
+  
+  bill.onmouseup = function() {
+    window.onmousemove = null;
+    if ( inAtm(bill) ) {
+      balance.value = +balance.value + +bill.dataset.cost;  // приводим значения к числам и складываем
+      bill.remove();    // удаляет HTML-элемент со страницы
+    } 
+  }
+}  
+/*console.log(this);
+  console.log(event);
+  console.log([event.target, event.clientX, event.clientY]); */
 
+function inAtm(bill) {
+  let atm = document.querySelector(".atm img");
+  
+  let atmCoords = atm.getBoundingClientRect();
+  let atmLeftX = atmCoords.x;
+  let atmRighX = atmCoords.x + atmCoords.width;
+  let atmTopY = atmCoords.y;
+  let atmBottomY = atmCoords.y + atmCoords.height/3;
+  
+  let billCoords = bill.getBoundingClientRect();
+  let billLeftX = billCoords.x;
+  let billRighX = billCoords.x + billCoords.width;
+  let billY = billCoords.y;
+  if(
+        billLeftX > atmLeftX
+    &&  billRighX < atmRighX
+    &&  billY > atmTopY
+    &&  billY < atmBottomY
+    ) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 
 
