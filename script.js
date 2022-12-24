@@ -6,7 +6,7 @@ let cup = document.querySelector(".cup img");
 
 function cookCoffee(name, price, elem) {
   if (state != "waiting") {
-     return;
+    return;
   }
   if (balance.value >= price) {
     state = "cooking";
@@ -86,12 +86,12 @@ for (let bill of money) {        // второй вариант функции
   bill.onmousedown = takemoney;
 }
 
-// в функцию, которая присвоена соботию, первым параметром передаётся объект события (event)
+// в функцию, которая присвоена событию, первым параметром передаётся объект события (event)
 
 function takemoney() {
   event.preventDefault(); // прерывает объект события (event)
   let bill = this;
-  let billCoords = bill.getBoundingClientRect(); // получение объекта, который описывает положение элемента на стр.
+  let billCoords = bill.getBoundingClientRect(); // получение объекта, который описывает положение элемента на странице
   let billHeight = billCoords.height;
   let billWidth = billCoords.width;
   bill.style.position = "absolute";
@@ -119,7 +119,7 @@ function takemoney() {
       let cashContainer = document.querySelector(".cash-container");
       bill.style.position = "";
       bill.style.transform = "rotate(90deg) translateX(25%)";
-      cashContainer.append(bill); // присоединяет к элементу
+      cashContainer.append(bill);                  // присоединяет к элементу
       bill.style.transition = "transform 1.5s";
       setTimeout(() => {                          
         bill.style.transform = "rotate(90deg) translateX(-75%)";
@@ -131,6 +131,7 @@ function takemoney() {
     } 
   }
 }  
+
 /*console.log(this);
   console.log(event);
   console.log([event.target, event.clientX, event.clientY]); */
@@ -159,7 +160,6 @@ function inAtm(bill) {
     return false;
   }
 }
-
 
 // Получение сдачи, создание элементов с использованием ECMAScript 
 
