@@ -1,6 +1,6 @@
-"use script"
+"use script";
 
-let state = "waiting" // "cooking" "ready"
+let state = "waiting"; // "cooking" "ready"
 let balance = document.querySelector(".balance");
 let cup = document.querySelector(".cup img");
 
@@ -43,7 +43,7 @@ function startCooking(name, src) {
       cup.style.cursor = "pointer";
       cup.onclick = function() {
         takeCoffee();
-      }
+      };
     }
   }, 50);
 }
@@ -78,7 +78,7 @@ function changeDisplayText(text) {
 let money = document.querySelectorAll(".money img");
 
 /*
-for (let i = 0; i < money.length; i++) { // первый вариант функции
+for (let i = 0; i < money.length; i++) {   // первый вариант функции
   money[i].onmousedown = takemoney;
 }       */
 
@@ -96,7 +96,7 @@ function takemoney() {
   let billWidth = billCoords.width;
   bill.style.position = "absolute";
   if (!bill.style.transform) {
-    bill.style.top = (event.clientY - billHeight/2) + "px";
+    bill.style.top = (event.clientY - billHeight/2) + "px"; // event.clientX(Y) расположение курсора на экране
     bill.style.left = (event.clientX - billWidth/2) + "px";
     bill.style.transform = "rotate(90deg)";
   } else {
